@@ -11,7 +11,7 @@
 # rather than at /var/tmp/cop-daemon because that would make a mess!
 
 # This daemon should be run as root or a cop-daemon user which has full deluser permissions.
-# I recommend ./cop-daemon.sh > /dev/null 2>&1 &
+# I recommend /var/tmp/cop-daemon/cop-daemon.sh > /dev/null 2>&1 &
 
 mkdir -p /var/tmp/cop-daemon/delusers/
 cd /var/tmp/cop-daemon/
