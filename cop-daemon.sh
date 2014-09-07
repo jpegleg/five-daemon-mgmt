@@ -1,11 +1,24 @@
-#!/bin/bash
+#!/bin/bash -c
 
 # Cop Daemon by Keegan Bowen
 # Enforce system users to only those on the list.
 
+# Dependancies: deluser
+####################################################################
+####################################################################
+####################################################################
+####################################################################
+#################
+#################    WARNING!
+#################    If an error happens while running this script,
+#################    your system could be ruined.
+#################    Run on a QA virtual machine first..
+
 # /var/tmp/cop-daemon/users.list is the file that contains this list.
 # If you like the current users in your system, run this:
-# cat /etc/passwd | cut -'d': -f1 > /var/tmp/cop-daemon/users.list
+
+# cat /etc/passwd | cut -d':' -f1 > /var/tmp/cop-daemon/users.list
+
 # Protect your users.list, access to that file negates the security of this daemon.
 # The keeper daemon can be used to help, just point it to /var/tmp/cop-daemon/users.list
 # rather than at /var/tmp/cop-daemon because that would make a mess!
@@ -21,7 +34,7 @@ cat /var/tmp/cop-daemon/users.list | while read user;
 done;
 
 function usergrep () {
-cat /etc/passwd | cut -'d': -f1 | while read currentusers; do
+cat /etc/passwd | cut -d':' -f1 | while read currentusers; do
       grep "$currentusers" *.out > "$currentusers"
       echo "$currentusers" > /var/tmp/cop-daemon/delusers/"$currentusers"
 done
