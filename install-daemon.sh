@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -c
 # Install Daemon by Keegan Bowen
 # Manage installation on a large list of servers from a single console.
 
