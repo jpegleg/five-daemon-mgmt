@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -c
 # Keeper daemon, ensure key programs and files are in place.
 # By Keegan Bowen
 
