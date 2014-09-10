@@ -7,6 +7,13 @@
 #  PRT /usr/local/archive
 #  DSY /tmp/bloat
 # 
+# The other configuration file sets the sleep, how often the daemon runs.
+# Set the sleep configuration file based on the load your box can handle, like this:
+# echo 3 > /var/tmp/keeper-daemon/keeper.sleep
+
+# The sleep config can be adjusted while the daemon is running.
+# After adjusting the over configuration file, restart the daemon.
+
 #  Then run the daemon like so:
 #  ./keeper-daemon.sh user-archive &> /var/log/keeper-daemon.log &
 # Or skip the logging:
