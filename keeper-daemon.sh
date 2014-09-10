@@ -50,6 +50,7 @@ function restore () {
     mv -f backup-"$SESH"/*/* "$PRT"/
     cp /dev/null /var/tmp/keeper-daemon/trigger"$SESH".file &&
     rm -rf "$PRT"/backup-"$SESH" 
+    rm -rf /var/tmp/keeper-daemon/backup-"$SESH"
 }
 
 function main () {
