@@ -67,7 +67,7 @@ function email () {
     echo "Utility Daemon Report $(date) from $(uname -a)" > /var/tmp/util-daemon/logreport
     cat /var/tmp/util-daemon/log/* >> /var/tmp/util-daemon/logreport
 #
-#          SET THE EMAIL BY EDITING THE SCRIPT HERE------------------------------------------------
+#          SET THE EMAIL BY EDITING THE SCRIPT HERE--------------------------------------------------
 #                                                                                                   |
 #                                                                                                  \ /
 #                                                                                                   V
