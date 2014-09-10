@@ -1,64 +1,75 @@
-#!/bin/bash -c
-# Keeper daemon, ensure key programs and files are in place.
-# By Keegan Bowen
+#!/bin/bash
+# Keeper Daemon by Keegan Bowen, 2014
+#
+#  Set two configuration files in /var/tmp/keeper-daemon/
+#  One is for your thread, for example "user-archive" needs a file called keeper-user-archive.conf
+#  In that file place one entry to protect and one to remove:
+#  PRT /usr/local/archive
+#  DSY /tmp/bloat
+# 
+#  Then run the daemon like so:
+#  ./keeper-daemon.sh user-archive &> /var/log/keeper-daemon.log &
+# Or skip the logging:
+# ./keeper-daemon.sh user-archive >/dev/null &
 
-# Use keeper-servers.conf as a line by line list of servers to check on.
-# Use keeper-example-server-name.conf as a list of file systems at example-server-name
-# to check on. Set keeper.sleep to the check interval in seconds, the default is 45. 
+DSY=$(grep DSY /var/tmp/keeper-daemon/keeper-"$@".conf|cut -d' ' -f2)
+PRT=$(grep PRT /var/tmp/keeper-daemon/keeper-"$@".conf|cut -d' ' -f2)
+SESH=$(date +"%m-%d-%y-%s")
+
+mkdir -p /var/tmp/keeper-daemon/backup-"$SESH"
+
+function keep () {
+    rm -rf "$DSY"
+    rm -f "$DSY"
+    scp -r "$PRT"/ /var/tmp/keeper-daemon/backup-"$SESH"/ 
+    cd /var/tmp/keeper-daemon/
+    tar czvf /var/tmp/keeper-daemon/"$SESH".tar.gz backup-"$SESH"/
+    rm -rf /var/tmp/keeper-daemon/backup-"$SESH"
+}
 
 function checker () {
-for server in $(cat keeper-servers.conf); do
-    ssh "$server" "mkdir -p /var/tmp/keeper-daemon"
-    scp keeper-"$server".conf "$server"://var/tmp/keeper-daemon/
-    ssh "$server" "cd /var/tmp/keeper-daemon/;
-        touch check.last;
-        stat $(cat /var/tmp/keeper-daemon/keeper*conf) | grep Modify | cut -d':' -f2,3 >> check.out;
-        diff check.out check.last > trigger.file;
-        cp check.out check.last; exit;"
-    scp "$server":/var/tmp/keeper-daemon/trigger.file ./"$server"\>trigger
-done
+    cd /var/tmp/keeper-daemon/
+    touch check.last
+    ls -lrth "$PRT"/ > check.out
+    diff check.out check.last > trigger"$SESH".file;
+    cat check.out > check.last;
 }
 
-# You can't have the > symbol in your server name with this setup.
-function serverloop () {
-for server in $(ls "$server"\>trigger | cut -d'>' | -f1); do
-    cat keeper-"$server".conf | while read "$system"; do
-        scp -r "$server"-backup/"$server"-"$system"-backup/ "$server":/"$system"
-done
-}
-
-function rotation () {
-    for x in $(cat keeper-servers.conf); do
-    server="$x";
-    main;
-    done;
+function restore () {
+    rm -rf "$PRT"
+    mkdir -p "$PRT"
+    cd /var/tmp/keeper-daemon/
+    tar xzvf "$SESH".tar.gz &&
+    mv -f backup-"$SESH"/*/* "$PRT"/
+    cp /dev/null /var/tmp/keeper-daemon/trigger"$SESH".file &&
+    rm -rf "$PRT"/backup-"$SESH" 
 }
 
 function main () {
-if [ -s "$server".trigger ]
+if [ -s trigger"$SESH".file ]
 then
-     echo "CORE CHANGES DETECTED"
-     echo "....................."
-     serverloop
-     echo ".............REVERTED"
+     echo "ESTABLISHING CONTENT"
+     echo "$SESH" "$PRT" data
+     echo "at $(date)"
+     restore
+     echo ".........ESTABLISHED"
 else
      checker
 fi
 }
 
-# When the daemon starts, a system backup is made. 
-for server in $(cat keeper-servers.conf); do
-   for system in $(cat "$server".conf); do
-       mkdir -p "$server"-backup/"$server"-$system"-backup/
-       scp -r "$server":/"$system" "$server"-backup/"$server"-"$system"-backup/
-       done
-done
-# Run the checker once to set the files.
-checker
+keep
 
-# As long as the daemon is running, it will defend the original backup.
-
-while true; do 
-    rotation;
-    sleep $(cat keeper.sleep)
+while true; do
+    checker
+    main
+    rm -rf "$DSY"
+    rm -f "$DSY"
+    sleep $(cat /var/tmp/keeper-daemon/keeper.sleep)
 done
+  
+
+# Run the keeper only on file systems containing only files that don't need to be accessed continously 
+# by running applications. File archives, repositories, and clustered servers are all great targets for the keeper.
+# If you run this on a production cluster server that requires manual or precision failovers, I recommend
+# building a command for the failover into the restore function. 
