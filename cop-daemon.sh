@@ -1,4 +1,4 @@
-#!/bin/bash -c
+#!/bin/bash
 
 # Cop Daemon by Keegan Bowen
 # Enforce system users to only those on the list.
