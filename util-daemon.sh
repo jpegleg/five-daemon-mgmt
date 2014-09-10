@@ -15,9 +15,10 @@ mkdir -p /var/tmp/util-daemon/log
 # This will not stop facebook.com, just let you know that the server is connected to it.
 # The mother-daemon.sh can react to the output for further processing, including
 # killing the connection.
-# 
+
 # Each config only takes up to three entries. If you need more, expand the greps!
 # Edit line 74 to set the desired email address.
+
 # Alert for specific network connections
 touch /var/tmp/util-daemon/blacklist.conf
 # Check on a network processes
