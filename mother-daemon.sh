@@ -5,8 +5,12 @@
 # The Mother does a lot. Checks on her children ( the other daemons ) 
 # Mom reacts to system warnings and does some cataloging and validation...
 
-# You will need to configure and QA the other daemons in the five-daemon-mgmt grou
-# before the mother-daemon will run properly. Once you have run the mother,
+# You will need to configure the other daemons in the five-daemon-mgmt group
+# before the mother-daemon will run properly. 
+# /var/tmp/keeper-daemon/keeper-daemon.sh
+# /var/tmp/util-daemon/util-daemon.sh
+# /var/tmp/cop-daemon/cop-daemon.sh
+# /var/tmp/install-daemon/install-daemon.sh
 
 mkdir -p /var/tmp/mother-daemon/log
 cat /etc/passwd | cut -'d': -f1 > /var/tmp/cop-daemon/users.list
@@ -72,7 +76,7 @@ function tcpkill () {
 }
 
 function warnresponse () {
-    grep "100%" /var/tmp/mother-daemon/mother.log > /var/tmp/mother-daemon/full.trigger
+       df -h |  grep "100%" > > /var/tmp/mother-daemon/full.trigger
        if [[ -s "/var/tmp/util-daemon/blacklist.warn" ]]; then
        netstat -a | grep $(cat /var/tmp/util-daemon/blacklist*) | grep -v grep | cut -d' ' -f7; tcpkill
            else
@@ -82,7 +86,7 @@ function warnresponse () {
 
 
 function alertresponse () {
-   grep "100%" /var/tmp/mother-daemon/mother.log > /var/tmp/mother-daemon/full.trigger
+       df -h |  grep "100%" > /var/tmp/mother-daemon/full.trigger
        if [[ -s "/var/tmp/mother-daemon/full.trigger" ]]; then
                DUTARGET=$(df -h | grep 100% | rev | cut -d'%' -f1 | rev )
                DUOPEN1=$(df -h | grep [0-6][0-9]% | rev | cut -d'%' -f1 | rev )
