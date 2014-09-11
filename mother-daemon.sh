@@ -76,7 +76,7 @@ function tcpkill () {
 }
 
 function warnresponse () {
-       df -h |  grep "100%" > > /var/tmp/mother-daemon/full.trigger
+       df -h |  grep "100%" > /var/tmp/mother-daemon/full.trigger
        if [[ -s "/var/tmp/util-daemon/blacklist.warn" ]]; then
        netstat -a | grep $(cat /var/tmp/util-daemon/blacklist*) | grep -v grep | cut -d' ' -f7; tcpkill
            else
