@@ -119,7 +119,7 @@ for warn in $(ls /var/tmp/util-daemon/log/*warn); do
 done
 
 for alert in $(ls /var/tmp/util-daemon/log/*alert); do
-  echo "$alert" >> /var/mother-daemon/log/mother.log
+  echo "$alert" >> /var/tmp/mother-daemon/log/mother.log
   alertresponse
 done
 }
