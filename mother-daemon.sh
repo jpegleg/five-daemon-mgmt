@@ -2,6 +2,9 @@
 
 # Mother Daemon by Keegan Bowen, 2014
 
+# DONT USE THIS YET
+# There are problems, major problems...
+
 # The Mother does a lot. Checks on her children ( the other daemons ) 
 # Mom reacts to system warnings and does some cataloging and validation...
 
@@ -41,17 +44,17 @@ else
     nohup /var/tmp/cop-daemon/cop-daemon.sh &
 fi
 if [[ -s /var/tmp/mother-daemon/keeper.pid ]]; then
-   echo "COP PID is "$COPID"
+   echo "KEEPER PID is "$COPID"
 else
     nohup /var/tmp/keeper-daemon/keeper-daemon.sh hadoop2 &
 fi
 if [[ -s /var/tmp/mother-daemon/install.pid ]]; then
-   echo "COP PID is "$COPID"
+   echo "INSTALL PID is "$COPID"
 else
     nohup /var/tmp/install-daemon/install-daemon.sh &
 fi
 if [[ -s /var/tmp/mother-daemon/util.pid ]]; then
-   echo "COP PID is "$COPID"
+   echo "UTIL PID is "$COPID"
 else
     nohup /var/tmp/util-daemon/util-daemon.sh &
 fi
