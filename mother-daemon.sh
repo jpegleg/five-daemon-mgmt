@@ -13,6 +13,7 @@
 # /var/tmp/install-daemon/install-daemon.sh
 
 mkdir -p /var/tmp/mother-daemon/log
+touch /var/tmp/mother-daemon/log/mother.log
 cat /etc/passwd | cut -'d': -f1 > /var/tmp/cop-daemon/users.list
 cat /var/tmp/cop-daemon/users.list
 echo "Those are the users allowed by the cop-daemon."
