@@ -2,9 +2,6 @@
 
 # Mother Daemon by Keegan Bowen, 2014
 
-# DONT USE THIS YET
-# There are problems, major problems...
-
 # The Mother does a lot. Checks on her children ( the other daemons ) 
 # Mom reacts to system warnings and does some cataloging and validation...
 
@@ -41,22 +38,22 @@ ps aux | grep util-daemon.sh | grep -v grep | cut -d' ' -f6 > /var/tmp/mother-da
 if [[ -s /var/tmp/mother-daemon/cop.pid ]]; then
    echo "COP PID is "$COPID"
 else
-    nohup /var/tmp/cop-daemon/cop-daemon.sh &
+   echo "COP is not running."
 fi
 if [[ -s /var/tmp/mother-daemon/keeper.pid ]]; then
    echo "KEEPER PID is "$COPID"
 else
-    nohup /var/tmp/keeper-daemon/keeper-daemon.sh hadoop2 &
+   echo "KEEPER is not running."
 fi
 if [[ -s /var/tmp/mother-daemon/install.pid ]]; then
    echo "INSTALL PID is "$COPID"
 else
-    nohup /var/tmp/install-daemon/install-daemon.sh &
+   echo "INSTALL is not running."
 fi
 if [[ -s /var/tmp/mother-daemon/util.pid ]]; then
    echo "UTIL PID is "$COPID"
 else
-    nohup /var/tmp/util-daemon/util-daemon.sh &
+    echo "UTIL is not running."
 fi
 }
 
@@ -104,16 +101,11 @@ function alertresponse () {
                cp /dev/null /var/tmp/mother-daemon/mother.log
                mkdir -p ${DUOPEN1}/tmp-storage/
                mkdir -p ${DUOPEN2}/tmp-storage/
-               mv "$DUTARGET"/*.log.gz ${DUOPEN1}/tmp-storage/ &
-               mv "$DUTARGET"/*/*.log.gz ${DUOPEN1}/tmp-storage/ &
-               mv "$DUTARGET"/*/*/*.log.gz ${DUOPEN1}/tmp-storage/ &
-               mv "$DUTARGET"/*/*/*/*.log.gz ${DUOPEN1}/tmp-storage/ &
-               mv "$DUTARGET"/*/*/*/*/*.log.gz ${DUOPEN2}/tmp-storage/ &
-               mv "$DUTARGET"/*/*/*/*/*/*.log.gz ${DUOPEN2}/tmp-storage/ &
            else
                echo "No alert response triggered."
            fi
 }
+
 
 function warntrig () {
 for warn in $(ls /var/tmp/util-daemon/log/*warn); do
