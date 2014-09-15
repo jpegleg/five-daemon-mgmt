@@ -36,26 +36,27 @@ ps aux | grep util-daemon.sh | grep -v grep | cut -d' ' -f6 > /var/tmp/mother-da
    INSTLID=$(/var/tmp/mother-daemon/install.pid)
    UTILID=$(cat /var/tmp/mother-daemon/util.pid)
 if [[ -s /var/tmp/mother-daemon/cop.pid ]]; then
-   echo "COP PID is "$COPID"
+   echo "COP PID is $COPID"
 else
    echo "COP is not running."
 fi
 if [[ -s /var/tmp/mother-daemon/keeper.pid ]]; then
-   echo "KEEPER PID is "$COPID"
+   echo "KEEPER PID is $COPID"
 else
    echo "KEEPER is not running."
 fi
 if [[ -s /var/tmp/mother-daemon/install.pid ]]; then
-   echo "INSTALL PID is "$COPID"
+   echo "INSTALL PID is $COPID"
 else
    echo "INSTALL is not running."
 fi
 if [[ -s /var/tmp/mother-daemon/util.pid ]]; then
-   echo "UTIL PID is "$COPID"
+   echo "UTIL PID is $COPID"
 else
     echo "UTIL is not running."
 fi
 }
+
 
 function sanitycheck () {
     date > /var/tmp/mother-daemon/log/sanity.log
