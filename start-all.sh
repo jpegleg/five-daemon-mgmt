@@ -17,4 +17,4 @@ nohup /var/tmp/install-daemon/install-daemon.sh &
 cd /var/tmp/mother-daemon/
 nohup /var/tmp/mother-daemon/mother-daemon.sh &
 
-echo "Starup complete.
+echo "Starup complete."
