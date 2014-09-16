@@ -39,23 +39,24 @@ if [[ -s /var/tmp/mother-daemon/cop.pid ]]; then
    echo "COP PID is $COPID"
 else
    echo "COP is not running."
-fi
+fi 
 if [[ -s /var/tmp/mother-daemon/keeper.pid ]]; then
-   echo "KEEPER PID is $COPID"
+   echo "KEEPER PID is $KEEPID"
 else
    echo "KEEPER is not running."
-fi
+fi 
 if [[ -s /var/tmp/mother-daemon/install.pid ]]; then
-   echo "INSTALL PID is $COPID"
+   echo "INSTALL PID is $INSTLID"
 else
    echo "INSTALL is not running."
-fi
+fi 
 if [[ -s /var/tmp/mother-daemon/util.pid ]]; then
-   echo "UTIL PID is $COPID"
+   echo "UTIL PID is $UTILID"
 else
     echo "UTIL is not running."
-fi
+fi  
 }
+
 
 
 function sanitycheck () {
