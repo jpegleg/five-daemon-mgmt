@@ -20,7 +20,7 @@ function checker () {
 }
 
 # Pass the scripts configuration to a file to be transferred to each server.
-echo $(cat deps.conf) > args.install
+cat deps.conf > args.install
 
 # Loop through the configuration file and update each server when
 # trigger.file contains data which should only happen when
