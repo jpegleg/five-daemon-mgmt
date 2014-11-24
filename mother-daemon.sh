@@ -1,10 +1,13 @@
 #!/bin/bash
-traphup()
+# 
+#  Keep things running with the traprestart function.
+#
+traprestart()
 {
 $0 "$$" &
 exit 0
 }
-trap traphup HUP TERM INT
+trap traprestart HUP TERM INT
 # Mother Daemon by Keegan Bowen, 2014
 
 # The Mother does a lot. Checks on her children ( the other daemons ) 
