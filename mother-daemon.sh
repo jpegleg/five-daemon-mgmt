@@ -35,10 +35,10 @@ fi
 echo "DAEMONIZING..."
 
 function checkall () {
-ps aux | grep cop-daemon.sh | grep -v grep | cut -d' ' -f6 > /var/tmp/mother-daemon/cop.pid
-ps aux | grep keeper-daemon.sh | grep -v grep | cut -d' ' -f6 > /var/tmp/mother-daemon/keeper.pid
-ps aux | grep install-daemon.sh | grep -v grep | cut -d' ' -f6 > /var/tmp/mother-daemon/install.pid
-ps aux | grep util-daemon.sh | grep -v grep | cut -d' ' -f6 > /var/tmp/mother-daemon/util.pid
+pgrep cop-daemon.sh > /var/tmp/mother-daemon/cop.pid
+pgrep keeper-daemon.sh > /var/tmp/mother-daemon/keeper.pid
+pgrep install-daemon.sh > /var/tmp/mother-daemon/install.pid
+pgrep util-daemon.sh > /var/tmp/mother-daemon/util.pid
    COPID=$(cat /var/tmp/mother-daemon/cop.pid)
    KEEPID=$(cat /var/tmp/mother-daemon/keeper.pid)
    INSTLID=$(/var/tmp/mother-daemon/install.pid)
