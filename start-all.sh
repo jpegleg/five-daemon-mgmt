@@ -7,7 +7,7 @@ echo "Starting up the Five Daemon MGMT group..."
 cd /var/tmp/cop-daemon/
 nohup /var/tmp/cop-daemon/cop-daemon.sh &
 cd /var/tmp/util-daemon/
-nohup /var/tmp/util-daemon/util-daemon.sh &
+nohup /var/tmp/util-daemon/util-daemon.sh /var/tmp/util-daemon/ 10 &
 cd /var/tmp/keeper-daemon/
 # The keeper daemon can have multiple configs, hadoop2 is just an example here.
 # Add your own configs and instances in!
