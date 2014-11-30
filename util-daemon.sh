@@ -1,12 +1,21 @@
 #!/bin/bash
 
-# Utility Daemon by Keegan Bowen, 2014
-
+# Utility Daemon by Keegan Bowen
+# traprestart function to keep the daemon running as much as we can
+traprestart()
+{
+$0 "$$" &
+exit 0
+}
+trap traprestart HUP TERM INT
 # Run like this:
-# nohup./util-daemon.sh /your/filesystem/ &
+# nohup./util-daemon.sh /your/filesystem/ 10 &
+# The "10" is the loop rate in seconds. Ten is okay on most systems.
 UDIR="$1"
 
 mkdir -p $UDIR/log
+touch $UDIR/util.sleep
+echo $3 > $UDIR/util.sleep
 
 # Do reporting with these congfiguration files. 
 # They need to be in place.
@@ -84,7 +93,7 @@ touch $UDIR/email.send
 # If there is anything in email.send, emails will be sent continously! 
 # It can be a lot of emails. Use with caution.
 # Example way to use the email.send file:
-# echo 1 > $UDIR/email.send && sleep 300 && cp /dev/null $UDIRemail.send
+# echo 1 > $UDIR/email.send && sleep 300 && cp /dev/null $UDIR/email.send
 # That sends emails for five minutes then stops them. Something like that could be used in a cron entry etc.
 
 function checkemail () {
