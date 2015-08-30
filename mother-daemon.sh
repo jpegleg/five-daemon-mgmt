@@ -69,7 +69,7 @@ fi
 
 function sanitycheck () {
     date > /var/tmp/mother-daemon/log/sanity.log
-    find / >> /var/tmp/mother-daemon/log/sanity.log
+    find / | xargs stat -c '%s %n' >> /var/tmp/mother-daemon/log/sanity.log
     SESH=$(date +"%m-%d-%y-%s")
     tar czvf /var/tmp/mother-daemon/sanity."$SESH".tar.gz /var/tmp/keeper-daemon/ &&
 #   Uncomment and add an archive location:
