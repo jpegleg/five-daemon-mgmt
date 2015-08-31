@@ -19,8 +19,8 @@
 # Or skip the logging:
 # ./keeper-daemon.sh user-archive >/dev/null &
 
-DSY=$(grep DSY /var/tmp/keeper-daemon/keeper-"$$@.conf | cut -d' ' -f2)
-PRT=$(grep PRT /var/tmp/keeper-daemon/keeper-"$@ )".conf | cut -d' ' -f2)
+DSY=$(grep DSY /var/tmp/keeper-daemon/keeper.conf | cut -d' ' -f2)
+PRT=$(grep PRT /var/tmp/keeper-daemon/keeper.conf | cut -d' ' -f2)
 
 SESH=$(date +"%m-%d-%y-%s")
 
