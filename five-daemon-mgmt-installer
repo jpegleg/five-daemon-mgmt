@@ -14,7 +14,7 @@ touch /var/tmp/mother-daemon/mother.sleep
 echo 1 > /var/tmp/mother-daemon/mother.sleep
 
 touch /var/tmp/install-daemon/install.sleep
-echo 60 > /var/tmp/mother-daemon/install.sleep
+echo 60 > /var/tmp/mother-daemon/installer.sleep
 
 touch /var/tmp/cop-daemon/cop.sleep
 echo 5 > /var/tmp/cop-daemon/cop.sleep
@@ -36,3 +36,8 @@ mkdir /tmp/lock 2> /dev/null
 
 echo "DSY /tmp/null" > /var/tmp/keeper-daemon/keeper.conf
 echo "DSY /tmp/lock" >> /var/tmp/keeper-daemon/keeper.conf
+
+touch /var/tmp/install-daemon/deps.conf
+touch /var/tmp/install-daemon/server.list
+echo localhost /var/tmp/install-daemon/server.list
+cat $(whoami)/.ssh/id_dsa.pub >> $(whoami)/.ssh/authorized_keys2
