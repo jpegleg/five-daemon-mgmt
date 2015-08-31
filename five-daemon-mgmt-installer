@@ -28,7 +28,7 @@ touch /var/tmp/mother-daemon/mother.sleep
 echo 1 > /var/tmp/mother-daemon/mother.sleep
 
 touch /var/tmp/install-daemon/install.sleep
-echo 60 > /var/tmp/mother-daemon/installer.sleep
+echo 60 > /var/tmp/install-daemon/installer.sleep
 
 touch /var/tmp/cop-daemon/cop.sleep
 echo 5 > /var/tmp/cop-daemon/cop.sleep
