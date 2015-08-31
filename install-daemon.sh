@@ -27,10 +27,10 @@ cat deps.conf > args.install
 # the deps.conf is updated.
 
 function serverloop () {
-    for x in $(cat server-list.conf); do
+    for x in $(cat /var/tmp/install-daemon/server-list.conf); do
         ssh -q "$x" "mkdir -p /var/tmp/install-daemon/; exit"
         scp args.install "$x"://var/tmp/install-daemon/
-        ssh "$x" "cat /var/tmp/install-daemon/args.install | while read entry; do yum -y install "$entry"; done && exit"
+        ssh "$x" "cat /var/tmp/install-daemon/args.install | while read entry; do apt-get install "$entry"; done && exit"
     done
 }
 
@@ -48,5 +48,5 @@ fi
 # The default is 100 seconds.
 while true; do
     main
-    sleep $(cat installer.sleep);
+    sleep $(cat /var/tmp/install-daemon/installer.sleep);
 done
