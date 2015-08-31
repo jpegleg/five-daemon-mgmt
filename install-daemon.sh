@@ -30,7 +30,7 @@ function serverloop () {
     for x in $(cat /var/tmp/install-daemon/server-list.conf); do
         ssh -q "$x" "mkdir -p /var/tmp/install-daemon/; exit"
         scp args.install "$x"://var/tmp/install-daemon/
-        ssh "$x" "cat /var/tmp/install-daemon/args.install | while read entry; do apt-get install "$entry"; done && exit"
+        ssh "$x" "cat /var/tmp/install-daemon/args.install | while read entry; do apt-get install --assume-yes "$entry"; done && exit"
     done
 }
 
