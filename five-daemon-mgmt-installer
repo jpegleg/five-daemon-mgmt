@@ -1,0 +1,38 @@
+#!/bin/sh
+# Five Daemon MGMT Installer
+
+mkdir -p /var/tmp/keeper-daemon
+mkdir -p /var/tmp/mother-daemon
+mkdir -p /var/tmp/util-daemon
+mkdir -p /var/tmp/install-daemon
+mkdir -p /var/tmp/cop-daemon
+
+touch /var/tmp/keeper-daemon/keeper.sleep
+echo 5 > /var/tmp/keeper-daemon/keeper.sleep
+
+touch /var/tmp/mother-daemon/mother.sleep
+echo 1 > /var/tmp/mother-daemon/mother.sleep
+
+touch /var/tmp/install-daemon/install.sleep
+echo 60 > /var/tmp/mother-daemon/install.sleep
+
+touch /var/tmp/cop-daemon/cop.sleep
+echo 5 > /var/tmp/cop-daemon/cop.sleep
+
+touch /var/tmp/util-daemon/util.sleep
+echo 60 > /var/tmp/util-daemon/util.sleep
+
+cp ./keeper-daemon.sh /var/tmp/keeper-daemon/
+cp ./mother-daemon.sh /var/tmp/mother-daemon/
+cp ./install-daemon.sh /var/tmp/install-daemon/
+cp ./util-daemon.sh /var/tmp/util-daemon/
+cp ./cop-daemon.sh /var/tmp/cop-daemon/
+
+chmod +x /var/tmp/*-daemon/*sh
+
+cat /etc/passwd | cut -d':' -f1 > /var/tmp/cop-daemon/users.list
+mkdir /tmp/null 2> /dev/null
+mkdir /tmp/lock 2> /dev/null
+
+echo "DSY /tmp/null" > /var/tmp/keeper-daemon/keeper.conf
+echo "DSY /tmp/lock" >> /var/tmp/keeper-daemon/keeper.conf
