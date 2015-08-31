@@ -53,5 +53,3 @@ echo "DSY /tmp/lock" >> /var/tmp/keeper-daemon/keeper.conf
 
 touch /var/tmp/install-daemon/deps.conf
 touch /var/tmp/install-daemon/server.list
-
-cat $(whoami)/.ssh/id_dsa.pub >> $(whoami)/.ssh/authorized_keys2
