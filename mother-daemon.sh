@@ -1,5 +1,5 @@
 #!/bin/bash
-# 
+# Mother daemon collects system information and five-daemon-mgmt information and reacts.
 #  Keep things running with the traprestart function.
 #
 traprestart()
@@ -19,7 +19,6 @@ trap traprestart HUP TERM INT
 # /var/tmp/util-daemon/util-daemon.sh
 # /var/tmp/cop-daemon/cop-daemon.sh
 # /var/tmp/install-daemon/install-daemon.sh
-
 mkdir -p /var/tmp/mother-daemon/log
 touch /var/tmp/mother-daemon/log/mother.log
 cat /etc/passwd | cut -'d': -f1 > /var/tmp/cop-daemon/users.list
@@ -35,70 +34,66 @@ fi
 echo "DAEMONIZING..."
 
 function checkall () {
-pgrep cop-daemon.sh > /var/tmp/mother-daemon/cop.pid
-pgrep keeper-daemon.sh > /var/tmp/mother-daemon/keeper.pid
-pgrep install-daemon.sh > /var/tmp/mother-daemon/install.pid
-pgrep util-daemon.sh > /var/tmp/mother-daemon/util.pid
-   COPID=$(cat /var/tmp/mother-daemon/cop.pid)
-   KEEPID=$(cat /var/tmp/mother-daemon/keeper.pid)
-   INSTLID=$(/var/tmp/mother-daemon/install.pid)
-   UTILID=$(cat /var/tmp/mother-daemon/util.pid)
+     pgrep cop-daemon.sh > /var/tmp/mother-daemon/cop.pid
+     pgrep keeper-daemon.sh > /var/tmp/mother-daemon/keeper.pid
+     pgrep install-daemon.sh > /var/tmp/mother-daemon/install.pid
+     pgrep util-daemon.sh > /var/tmp/mother-daemon/util.pid
+     COPID=$(cat /var/tmp/mother-daemon/cop.pid)
+     KEEPID=$(cat /var/tmp/mother-daemon/keeper.pid)
+     INSTLID=$(/var/tmp/mother-daemon/install.pid)
+     UTILID=$(cat /var/tmp/mother-daemon/util.pid)
 if [[ -s /var/tmp/mother-daemon/cop.pid ]]; then
-   echo "COP PID is $COPID"
+     echo "COP PID is $COPID"
 else
-   echo "COP is not running."
+     echo "COP is not running."
 fi 
 if [[ -s /var/tmp/mother-daemon/keeper.pid ]]; then
-   echo "KEEPER PID is $KEEPID"
+     echo "KEEPER PID is $KEEPID"
 else
-   echo "KEEPER is not running."
+     echo "KEEPER is not running."
 fi 
 if [[ -s /var/tmp/mother-daemon/install.pid ]]; then
-   echo "INSTALL PID is $INSTLID"
+     echo "INSTALL PID is $INSTLID"
 else
-   echo "INSTALL is not running."
+     echo "INSTALL is not running."
 fi 
 if [[ -s /var/tmp/mother-daemon/util.pid ]]; then
-   echo "UTIL PID is $UTILID"
+     echo "UTIL PID is $UTILID"
 else
-    echo "UTIL is not running."
+     echo "UTIL is not running."
 fi  
 }
 
-
-
 function sanitycheck () {
-    date > /var/tmp/mother-daemon/log/sanity.log
-    find / | xargs stat -c '%s %n' >> /var/tmp/mother-daemon/log/sanity.log
-    SESH=$(date +"%m-%d-%y-%s")
-    tar czvf /var/tmp/mother-daemon/sanity."$SESH".tar.gz /var/tmp/keeper-daemon/ &&
-#   Uncomment and add an archive location:
-#   scp /var/tmp/mother-daemon/sanity."$SESH".tar.gz /mnt/archive/location
-    tar czvf /var/tmp/mother-daemon/sanity.catalog."$SESH".tar.gz /var/tmp/mother-daemon/sanity.log &&
-#   Uncomment and add an archive location:
-#   scp /var/tmp/mother-daemon/sanity.catalog."$SESH".tar.gz /mnt/archive/location
-    echo "Catalogs have been archived..."
+     date > /var/tmp/mother-daemon/log/sanity.log
+     find / | xargs stat -c '%s %n' >> /var/tmp/mother-daemon/log/sanity.log
+     SESH=$(date +"%m-%d-%y-%s")
+     tar czvf /var/tmp/mother-daemon/sanity."$SESH".tar.gz /var/tmp/keeper-daemon/ &&
+#    Uncomment and add an archive location:
+#    scp /var/tmp/mother-daemon/sanity."$SESH".tar.gz /mnt/archive/location
+     tar czvf /var/tmp/mother-daemon/sanity.catalog."$SESH".tar.gz /var/tmp/mother-daemon/sanity.log &&
+#    Uncomment and add an archive location:
+#    scp /var/tmp/mother-daemon/sanity.catalog."$SESH".tar.gz /mnt/archive/location
+     echo "Catalogs have been archived..."
 }
-
 function tcpkill () {
-   # Still working on this part...
-   echo "Admin, do something about this!"
-   cat /var/tmp/util-daemon/netstat.out
+     # Still working on this part...
+     echo "Admin, do something about this!"
+     cat /var/tmp/util-daemon/netstat.out
 }
 
 function warnresponse () {
-       df -h |  grep "100%" > /var/tmp/mother-daemon/full.trigger
-       if [[ -s "/var/tmp/util-daemon/blacklist.warn" ]]; then
-       netstat -a | grep $(cat /var/tmp/util-daemon/blacklist*) | grep -v grep | cut -d' ' -f7; tcpkill
-           else
-               echo "No warning response triggered."
-           fi
+df -h |  grep "100%" > /var/tmp/mother-daemon/full.trigger
+    if [[ -s "/var/tmp/util-daemon/blacklist.warn" ]]; then
+          netstat -a | grep $(cat /var/tmp/util-daemon/blacklist*) | grep -v grep | cut -d' ' -f7; tcpkill
+     else
+          echo "No warning response triggered."
+     fi
 }
 
-
 function alertresponse () {
-       df -h |  grep "100%" > /var/tmp/mother-daemon/full.trigger
-       if [[ -s "/var/tmp/mother-daemon/full.trigger" ]]; then
+df -h |  grep "100%" > /var/tmp/mother-daemon/full.trigger
+     if [[ -s "/var/tmp/mother-daemon/full.trigger" ]]; then
                DUTARGET=$(df -h | grep 100% | rev | cut -d'%' -f1 | rev )
                DUOPEN1=$(df -h | grep [0-6][0-9]% | rev | cut -d'%' -f1 | rev )
                DUOPEN2=$(df -h | grep [0-9]% | rev | cut -d'%' -f1 | rev )
@@ -116,20 +111,17 @@ function alertresponse () {
            fi
 }
 
-
 function warntrig () {
 for warn in $(ls /var/tmp/util-daemon/log/*warn); do
-  echo "$warn" >> /var/tmp/mother-daemon/log/mother.log
-  warnresponse
+     echo "$warn" >> /var/tmp/mother-daemon/log/mother.log
+     warnresponse
 done
 
 for alert in $(ls /var/tmp/util-daemon/log/*alert); do
-  echo "$alert" >> /var/tmp/mother-daemon/log/mother.log
-  alertresponse
+     echo "$alert" >> /var/tmp/mother-daemon/log/mother.log
+     alertresponse
 done
 }
-
-
 # And now the deep dark loop
 sanitycheck
 while true; do
