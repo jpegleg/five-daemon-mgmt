@@ -25,7 +25,7 @@ touch /var/tmp/keeper-daemon/keeper.sleep
 echo 5 > /var/tmp/keeper-daemon/keeper.sleep
 
 touch /var/tmp/mother-daemon/mother.sleep
-echo 1 > /var/tmp/mother-daemon/mother.sleep
+echo 60 > /var/tmp/mother-daemon/mother.sleep
 
 touch /var/tmp/install-daemon/install.sleep
 echo 60 > /var/tmp/install-daemon/installer.sleep
