@@ -52,4 +52,4 @@ echo "DSY /tmp/null" > /var/tmp/keeper-daemon/keeper.conf
 echo "DSY /tmp/lock" >> /var/tmp/keeper-daemon/keeper.conf
 
 touch /var/tmp/install-daemon/deps.conf
-touch /var/tmp/install-daemon/server.list
+touch /var/tmp/install-daemon/server-list.conf
