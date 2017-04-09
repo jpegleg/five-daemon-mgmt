@@ -34,14 +34,43 @@ fi
 echo "DAEMONIZING..."
 
 checkall() {
-     pgrep cop-daemon.sh > /var/tmp/mother-daemon/cop.pid
-     pgrep keeper-daemon.sh > /var/tmp/mother-daemon/keeper.pid
-     pgrep install-daemon.sh > /var/tmp/mother-daemon/install.pid
-     pgrep util-daemon.sh > /var/tmp/mother-daemon/util.pid
+coppidval=$(pgrep cop-daemon.sh)
+if [ -z $coppidval ]; then
+    touch /var/tmp/mother-daemon/cop.pid
+    ps auxwww | grep /var/tmp/cop-daemon/cop-daemon.sh$ | awk '{print $2}' | head -n1 > /var/tmp/mother-daemon/cop.pid
+else
+    touch /var/tmp/mother-daemon/cop.pid
+    echo $coppidval > /var/tmp/mother-daemon/cop.pid
+fi
+keeperpidval=$(pgrep keeper-daemon.sh)
+if [ -z $keeperpidval ]; then
+    touch /var/tmp/mother-daemon/keeper.pid
+    ps auxwww | grep /var/tmp/keeper-daemon/keeper-daemon.sh$ | awk '{print $2}' | head -n1 > /var/tmp/moth-daemon/keeper.pid
+else
+    touch /var/tmp/mother-daemon/keeper.pid
+    echo $keeperpidval > /var/tmp/mother-daemon/keeper.pid
+fi
+installpidval=$(pgrep install-daemon.sh)
+if [ -z $installpidval ]; then
+    touch /var/tmp/mother-daemon/install.pid
+    ps auxwww | grep /var/tmp/install-daemon/install-daemon.sh$ | awk '{print $2}' | head -n1 > /var/tmp/mother-daemon/install.pid
+else
+    touch /var/tmp/mother-daemon/install.pid
+    echo $installpidval > /var/tmp/mother-daemon/install.pid
+fi
+utilpidval=$(pgrep util-daemon.sh)
+if [ -z $utilpidval ]; then
+    touch /var/tmp/mother-daemon/util.pid
+    ps auxwww | grep /var/tmp/util-daemon/util-daemon.sh$ | awk '{print $2}' | head -n1 > /var/tmp/mother-daemon/util.pid
+else
+    touch /var/tmp/mother-daemon/util.pid
+    echo $utilpidval > /var/tmp/mother-daemon/util.pid
+fi
      COPID=$(cat /var/tmp/mother-daemon/cop.pid)
      KEEPID=$(cat /var/tmp/mother-daemon/keeper.pid)
-     INSTLID=$(/var/tmp/mother-daemon/install.pid)
+     INSTLID=$(cat /var/tmp/mother-daemon/install.pid)
      UTILID=$(cat /var/tmp/mother-daemon/util.pid)
+
 if [[ -s /var/tmp/mother-daemon/cop.pid ]]; then
      echo "COP PID is $COPID"
 else
