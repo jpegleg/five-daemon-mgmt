@@ -8,11 +8,11 @@
 # will install.
 
 # Daemon mode, check for deps.conf updates:
-function differ () {
+differ() {
   diff check.out check.last > trigger.file
 }
 
-function checker () {
+checker () {
   touch check.last
   stat deps.conf | grep Modify | cut -d':' -f2,3 > check.out;
   differ
@@ -26,7 +26,7 @@ cat deps.conf > args.install
 # trigger.file contains data which should only happen when
 # the deps.conf is updated.
 
-function serverloop () {
+serverloop() {
     for x in $(cat /var/tmp/install-daemon/server-list.conf); do
         ssh -q "$x" "mkdir -p /var/tmp/install-daemon/; exit"
         scp args.install "$x"://var/tmp/install-daemon/
@@ -34,7 +34,7 @@ function serverloop () {
     done
 }
 
-function main () {
+main() {
 if [ -s trigger.file ]
 then
      echo "INSTALLING UPDATES"
