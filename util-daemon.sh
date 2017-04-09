@@ -38,15 +38,14 @@ touch $UDIR/killproc.conf
 # Check for a running proess
 touch $UDIR/procp.conf
 
-
-function gather () {
+gather() {
     df -h > $UDIR/df.out
     uptime > $UDIR/uptime.out
     netstat -a | grep -v unix > $UDIR/netstat.out
     ps aux > $UDIR/ps.out
 }
 
-function report () {
+report() {
     grep [9][7-9]% $UDIR/df.out > $UDIR/log/df.warn
     grep "100%" $UDIR/df.out > $UDIR/log/df.alert
     grep keeper-daemon.sh $UDIR/ps.out > $UDIR/log/keeper.warn
@@ -77,7 +76,7 @@ function report () {
     grep $(cat $UDIR/procp.conf | cut -d',' -f3) $UDIR/ps.out > $UDIR/log/procp3.log
 }
 
-function email () {
+email() {
     echo "Utility Daemon Report $(date) from $(uname -a)" > $UDIR/logreport
     cat $UDIR/log/* >> $UDIR/logreport
 #
@@ -96,7 +95,7 @@ touch $UDIR/email.send
 # echo 1 > $UDIR/email.send && sleep 300 && cp /dev/null $UDIR/email.send
 # That sends emails for five minutes then stops them. Something like that could be used in a cron entry etc.
 
-function checkemail () {
+checkemail() {
 if [ -s $UDIR/email.send ]
 then
      echo "EMAILING REPORT"
@@ -114,4 +113,4 @@ while true; do
     sleep $(cat $UDIR/util.sleep)
 done
 
-# Set the sleep amount in seconds by placing a number in $UDIR/util.sleep
+# Set the sleep amount in seconds by placing a number in $UDIR/util.sleep:wq
