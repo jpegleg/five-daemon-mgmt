@@ -7,7 +7,7 @@ read pull
 
 if [ $pull = yes ]; then
   wget https://github.com/jpegleg/five-daemon-mgmt/archive/master.zip
-  gunzip master.zip
+  unzip master.zip
   cd five-daemon-mgmt-master/
 else
   echo "Okay, using what we have in $(pwd)"
