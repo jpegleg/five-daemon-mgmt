@@ -3,7 +3,8 @@ five-daemon-mgmt
 
 These five shell daemons install, enforce, report, and maintain unix systems.
 
-USE CAUTION, THIS SET OF DAEMONS REQUIRES CONFIGURATION
+THis set of daemons requires configuration. Take a look at each script and make sure it is tuned
+for your system before you run it.
 
 chmod +x ./five-daemon-installer ./start-all.sh
 
