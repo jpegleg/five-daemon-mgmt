@@ -106,9 +106,7 @@ sanitycheck() {
      echo "Catalogs have been archived..."
 }
 tcpkill() {
-     # Still working on this part...
-     echo "Admin, do something about this!"
-     cat /var/tmp/util-daemon/netstat.out
+     cat /var/tmp/util-daemon/netstat.out >> /var/log/tcpkill.dat
 }
 
 warnresponse() {
