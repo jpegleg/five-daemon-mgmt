@@ -33,7 +33,7 @@ fi
 
 echo "DAEMONIZING..."
 
-function checkall () {
+checkall() {
      pgrep cop-daemon.sh > /var/tmp/mother-daemon/cop.pid
      pgrep keeper-daemon.sh > /var/tmp/mother-daemon/keeper.pid
      pgrep install-daemon.sh > /var/tmp/mother-daemon/install.pid
@@ -64,7 +64,7 @@ else
 fi  
 }
 
-function sanitycheck () {
+sanitycheck() {
      date > /var/tmp/mother-daemon/log/sanity.log
      find / | xargs stat -c '%s %n' >> /var/tmp/mother-daemon/log/sanity.log
      SESH=$(date +"%m-%d-%y-%s")
@@ -76,13 +76,13 @@ function sanitycheck () {
 #    scp /var/tmp/mother-daemon/sanity.catalog."$SESH".tar.gz /mnt/archive/location
      echo "Catalogs have been archived..."
 }
-function tcpkill () {
+tcpkill() {
      # Still working on this part...
      echo "Admin, do something about this!"
      cat /var/tmp/util-daemon/netstat.out
 }
 
-function warnresponse () {
+warnresponse() {
 df -h |  grep "100%" > /var/tmp/mother-daemon/full.trigger
     if [[ -s "/var/tmp/util-daemon/blacklist.warn" ]]; then
           netstat -a | grep $(cat /var/tmp/util-daemon/blacklist*) | grep -v grep | cut -d' ' -f7; tcpkill
@@ -91,7 +91,7 @@ df -h |  grep "100%" > /var/tmp/mother-daemon/full.trigger
      fi
 }
 
-function alertresponse () {
+alertresponse() {
 df -h |  grep "100%" > /var/tmp/mother-daemon/full.trigger
      if [[ -s "/var/tmp/mother-daemon/full.trigger" ]]; then
                DUTARGET=$(df -h | grep 100% | rev | cut -d'%' -f1 | rev )
@@ -111,7 +111,7 @@ df -h |  grep "100%" > /var/tmp/mother-daemon/full.trigger
            fi
 }
 
-function warntrig () {
+warntrig() {
 for warn in $(ls /var/tmp/util-daemon/log/*warn); do
      echo "$warn" >> /var/tmp/mother-daemon/log/mother.log
      warnresponse
