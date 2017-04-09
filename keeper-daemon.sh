@@ -26,7 +26,7 @@ SESH=$(date +"%m-%d-%y-%s")
 
 mkdir -p /var/tmp/keeper-daemon/backup-"$SESH"
 
-function keep () {
+keep() {
     rm -rf "$DSY"
     rm -f "$DSY"
     scp -r "$PRT"/ /var/tmp/keeper-daemon/backup-"$SESH"/ 
@@ -35,7 +35,7 @@ function keep () {
     rm -rf /var/tmp/keeper-daemon/backup-"$SESH"
 }
 
-function checker () {
+checker() {
     cd /var/tmp/keeper-daemon/
     touch check.last
     ls -lrth "$PRT"/ > check.out
@@ -43,7 +43,7 @@ function checker () {
     cat check.out > check.last;
 }
 
-function restore () {
+restore() {
     rm -rf "$PRT"
     mkdir -p "$PRT"
     cd /var/tmp/keeper-daemon/
@@ -54,7 +54,7 @@ function restore () {
     rm -rf /var/tmp/keeper-daemon/backup-"$SESH"
 }
 
-function main () {
+main() {
 if [ -s trigger"$SESH".file ]
 then
      echo "ESTABLISHING CONTENT"
