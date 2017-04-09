@@ -1,13 +1,11 @@
 #!/bin/sh
 # Five Daemon MGMT Installer
-#!/bin/sh
-# Five Daemon MGMT Installer
 
 echo "Would you like to pull down the code from github?"
 echo "Type yes or no and press enter."
 read pull
 
-if [ $pull == yes ]; then
+if [ $pull = yes ]; then
   wget https://github.com/jpegleg/five-daemon-mgmt/archive/master.zip
   gunzip master.zip
   cd five-daemon-mgmt-master/
