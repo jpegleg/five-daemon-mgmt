@@ -1,6 +1,8 @@
 five-daemon-mgmt
 ================
 
+If you can, use selinux and something like anisble instead of these tools.
+
 These five shell daemons install, enforce, report, and maintain unix systems.
 
 This set of daemons requires configuration. Take a look at each script and make sure it is tuned
