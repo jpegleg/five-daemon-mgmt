@@ -45,7 +45,7 @@ fi
 keeperpidval=$(pgrep keeper-daemon.sh)
 if [ -z $keeperpidval ]; then
     touch /var/tmp/mother-daemon/keeper.pid
-    ps auxwww | grep /var/tmp/keeper-daemon/keeper-daemon.sh$ | awk '{print $2}' | head -n1 > /var/tmp/moth-daemon/keeper.pid
+    ps auxwww | grep /var/tmp/keeper-daemon/keeper-daemon.sh$ | awk '{print $2}' | head -n1 > /var/tmp/mother-daemon/keeper.pid
 else
     touch /var/tmp/mother-daemon/keeper.pid
     echo $keeperpidval > /var/tmp/mother-daemon/keeper.pid
