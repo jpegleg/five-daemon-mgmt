@@ -1,7 +1,11 @@
 five-daemon-mgmt
 ================
 
-If you can, use selinux and something like anisble instead of these tools.
+If you can, use selinux and something like puppet or ansible instead of these tools.
+
+If you do need to use these, or something like them, make sure you have enough system resources allocated and tune the sleep values based on the situation. 
+
+...
 
 These five shell daemons install, enforce, report, and maintain unix systems.
 
