@@ -46,6 +46,15 @@ gather() {
 }
 
 report() {
+
+ly=$(which lynis)
+
+if [ -z "$ly" ]; then
+    lynis && cp /var/log/lynis-report.dat $UIDR/log/
+else
+    echo "No lynis installed!" > $UDIR/log/lynis.warn
+fi
+
     grep [9][7-9]% $UDIR/df.out > $UDIR/log/df.warn
     grep "100%" $UDIR/df.out > $UDIR/log/df.alert
     grep keeper-daemon.sh $UDIR/ps.out > $UDIR/log/keeper.warn
