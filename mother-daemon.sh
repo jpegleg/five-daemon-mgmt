@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Mother daemon collects system information and five-daemon-mgmt information and reacts.
 #  Keep things running with the traprestart function.
 #
