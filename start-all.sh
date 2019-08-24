@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # After each daemon is configured, you can start the whole family with this script:
 # sudo ./start-all.sh
