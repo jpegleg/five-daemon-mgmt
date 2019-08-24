@@ -1,3 +1,5 @@
+#/usr/bin/env bash
+
 # Enforce system users to only those on the list.
 
 # /var/tmp/cop-daemon/users.list is the file that contains this list.
@@ -10,7 +12,7 @@
 # rather than at /var/tmp/cop-daemon 
 # Starting it up 
 # /var/tmp/cop-daemon/cop-daemon.sh > /dev/null 2>&1 &
-u
+
 mkdir -p /var/tmp/cop-daemon/delusers/
 cd /var/tmp/cop-daemon/
 cat /var/tmp/cop-daemon/users.list | while read user;
