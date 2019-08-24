@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Utility Daemon by Keegan Bowen
 # traprestart function to keep the daemon running as much as we can
