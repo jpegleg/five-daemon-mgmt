@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Keeper Daemon by Keegan Bowen, 2014
 #
 #  Set two configuration files in /var/tmp/keeper-daemon/
